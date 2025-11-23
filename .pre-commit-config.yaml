@@ -8,5 +8,3 @@ repos:
 
       # ruff formatter (black-style auto formatting)
       - id: ruff-format
-
-      
