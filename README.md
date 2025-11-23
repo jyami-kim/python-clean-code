@@ -1,37 +1,176 @@
 # Python Clean Code 강의 자료
 
-Python 클린 코드 원칙을 설명하기 위한 교육 자료입니다. 로또 번호 생성기를 예제로 사용하여 좋은 코드와 나쁜 코드를 비교합니다.
+Python 클린 코드 원칙을 설명하기 위한 교육 자료입니다. 
+단계별 예제와 리팩토링 과정을 통해 클린 코드 작성법을 학습합니다.
 
-## 프로젝트 구조
+## 📚 프로젝트 구조
 
 ```
 clean-code/
-├── examples/
-│   ├── bad_lottery.py      # 나쁜 코드 예제
-│   └── clean_lottery.py    # 클린 코드 예제
-├── pyproject.toml          # uv 프로젝트 설정
-└── README.md               # 이 파일
+├── src/
+│   ├── examples/               # 클린 코드 원칙 예제
+│   │   ├── 01.variable.py      # 변수명 작성 원칙
+│   │   ├── 02.type_hint.py     # 타입 힌트 사용법
+│   │   └── 03.formatting.py    # Ruff를 활용한 포맷팅
+│   │
+│   ├── lottery04/              # 함수 분리 버전
+│   │   ├── __init__.py
+│   │   └── game.py
+│   │
+│   ├── lottery05/              # IO 의존성 제거 버전
+│   │   ├── __init__.py
+│   │   └── game.py
+│   │
+│   └── refactoring/            # 단계별 리팩토링 과정
+│       ├── 00.bad_lottery.py   # 나쁜 코드 (시작점)
+│       ├── 00.clean_lottery.py # 깔끔한 코드 (최종)
+│       ├── 01.lottery.py       # Step 1: 기본 구조
+│       ├── 02.lottery.py       # Step 2: 함수 분리
+│       ├── 03.lottery.py       # Step 3: 상수 추출
+│       └── 04.lottery.py       # Step 4: 클래스 설계
+│
+├── test/                       # 테스트 코드
+│   ├── lottery04/
+│   │   └── game_test.py
+│   └── lottery05/
+│       └── game_test.py
+│
+├── .ruff.toml                  # Ruff 린터/포맷터 설정
+├── pyproject.toml              # 프로젝트 설정 (pytest 등)
+└── README.md                   # 이 파일
 ```
 
-## 설치 및 실행
+## 🚀 설치 및 실행
 
 이 프로젝트는 [uv](https://github.com/astral-sh/uv)를 사용하여 패키지를 관리합니다.
 
-### 실행 방법
+### 설치
 
 ```bash
-# 나쁜 코드 예제 실행
-uv run examples/bad_lottery.py
+# uv 설치 (macOS/Linux)
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 클린 코드 예제 실행
-uv run examples/clean_lottery.py
+# 프로젝트 클론
+git clone https://github.com/jyami-kim/python-clean-code.git
+cd python-clean-code
 ```
 
-## 코드 비교
+### 예제 실행
 
-### 나쁜 코드 예제 (`bad_lottery.py`)
+```bash
+# 변수명 작성 원칙
+uv run src/examples/01.variable.py
 
-이 코드는 다음과 같은 클린 코드 원칙을 위반합니다:
+# 타입 힌트 사용법
+uv run src/examples/02.type_hint.py
+
+# Ruff 포맷팅 가이드
+uv run src/examples/03.formatting.py
+
+# 리팩토링 단계별 코드
+uv run src/refactoring/00.bad_lottery.py
+uv run src/refactoring/02.lottery.py
+
+# lottery04 (함수 분리)
+uv run src/lottery04/game.py
+
+# lottery05 (IO 의존성 제거)
+uv run src/lottery05/game.py
+```
+
+### 테스트 실행
+
+```bash
+# 모든 테스트 실행
+uv run pytest
+
+# 특정 테스트만 실행
+uv run pytest test/lottery04/
+uv run pytest test/lottery05/
+
+# 상세 출력
+uv run pytest -v
+```
+
+### 코드 검사 및 포맷팅
+
+```bash
+# Ruff로 코드 검사
+uv run ruff check .
+
+# 자동 수정
+uv run ruff check --fix .
+
+# 코드 포맷팅
+uv run ruff format .
+```
+
+## 📖 학습 내용
+
+### 1. 변수명 작성 원칙 (`01.variable.py`)
+
+**13가지 변수명 원칙:**
+1. 의도를 분명히 밝혀라
+2. 그릇된 정보를 피하라
+3. 의미 있게 구분하라
+4. 발음하기 쉬운 이름을 사용하라
+5. 검색하기 쉬운 이름을 사용하라
+6. 인코딩을 피하라 (헝가리안 표기법 X)
+7. 자신의 기억력을 자랑하지 마라
+8. 클래스 이름은 명사
+9. 메서드 이름은 동사
+10. 기발한 이름은 피하라
+11. 한 개념에 한 단어를 사용하라
+12. 해법 영역과 문제 영역의 이름
+13. 의미 있는 맥락을 추가하라
+
+### 2. 타입 힌트 (`02.type_hint.py`)
+
+**타입 힌트를 사용해야 하는 이유:**
+- ✅ 팀 협업에서 함수의 의도가 선명해짐
+- ✅ 대규모 프로젝트에서 리팩토링 안정성 급증
+- ✅ IDE 자동완성이 정확해짐 (생산성 향상)
+- ✅ 문서 역할 (Self-Documenting Code)
+- ✅ 복잡한 타입도 명확하게 표현 가능
+
+### 3. 코드 포맷팅 (`03.formatting.py`)
+
+**Ruff 활용:**
+- 린트 규칙: E (스타일), F (논리 에러), I (import 정렬), N (네이밍), W (경고), UP (최신 문법)
+- 자동 포맷팅으로 일관된 코드 스타일 유지
+- VS Code 통합으로 저장 시 자동 적용
+
+### 4. 단계별 리팩토링 (`refactoring/`)
+
+**리팩토링 과정:**
+1. **00.bad_lottery.py** - 모든 원칙을 위반한 나쁜 코드
+2. **01.lottery.py** - 기본 구조 개선
+3. **02.lottery.py** - 함수 분리 및 매직 넘버 제거
+4. **03.lottery.py** - 상수 추출 및 타입 힌트
+5. **04.lottery.py** - 클래스 설계 및 관심사 분리
+6. **00.clean_lottery.py** - 최종 클린 코드
+
+### 5. 테스트 가능한 설계
+
+**lottery04 vs lottery05:**
+- `lottery04`: 기본 함수 분리
+- `lottery05`: IO 의존성 주입으로 테스트 가능한 설계
+
+```python
+# lottery05: IO 의존성 주입
+def read_user_numbers(input_func=input, print_func=print):
+    # 테스트에서 mock 함수를 주입 가능
+    pass
+
+# 테스트 코드
+def test_valid_input():
+    mock_input = Mock(side_effect=["1", "2", "3", "4", "5", "6"])
+    numbers = read_user_numbers(input_func=mock_input)
+```
+
+## 🎯 나쁜 코드 vs 좋은 코드
+
+### 나쁜 코드 예제 (`00.bad_lottery.py`)
 
 #### ❌ 위반 사항
 
@@ -63,9 +202,7 @@ uv run examples/clean_lottery.py
    - 함수가 여러 가지 일을 동시에 수행
    - 관심사의 분리가 되어있지 않음
 
-### 클린 코드 예제 (`clean_lottery.py`)
-
-이 코드는 다음과 같은 클린 코드 원칙을 따릅니다:
+### 좋은 코드 예제 (`00.clean_lottery.py`)
 
 #### ✅ 적용된 원칙
 
@@ -164,19 +301,115 @@ uv run examples/clean_lottery.py
 - 작은 단위로 나누어진 함수는 테스트하기 쉬움
 - 의존성이 적은 코드 작성
 
-## 실습 과제
+## 📝 테스트 작성
 
-1. `bad_lottery.py`를 직접 실행하고 코드를 분석해보세요
-2. `clean_lottery.py`를 실행하고 코드를 비교해보세요
-3. 두 코드의 차이점을 직접 나열해보세요
-4. 다른 간단한 프로그램을 클린 코드 원칙을 적용하여 리팩토링해보세요
+### pytest 사용법
 
-## 참고 자료
+```bash
+# 모든 테스트 실행
+uv run pytest
 
+# 특정 파일 테스트
+uv run pytest test/lottery04/game_test.py
+
+# 상세 출력 (docstring 표시)
+uv run pytest -v
+
+# 실패한 테스트만 재실행
+uv run pytest --lf
+```
+
+### 테스트 예제
+
+```python
+class TestIsValidLottoNumber:
+    """로또 번호 유효성 검증 테스트"""
+    
+    def test_valid_number_within_range(self):
+        """유효한 범위 내의 번호는 True를 반환한다"""
+        assert is_valid_lotto_number(25, [1, 2, 3]) is True
+```
+
+**docstring의 역할:**
+- 테스트의 의도를 명확히 전달
+- pytest `-v` 옵션으로 한글 설명 출력
+- `__doc__` 속성으로 프로그래밍 방식 접근 가능
+
+## 🛠️ 개발 도구
+
+### Ruff (린터 & 포맷터)
+
+프로젝트는 `.ruff.toml` 파일로 코드 품질을 관리합니다.
+
+```bash
+# 코드 검사
+uv run ruff check .
+
+# 자동 수정
+uv run ruff check --fix .
+
+# 포맷팅
+uv run ruff format .
+
+# 규칙 설명
+uv run ruff rule E501
+```
+
+### VS Code 설정
+
+`.vscode/settings.json`에 추가하여 저장 시 자동 포맷팅:
+
+```json
+{
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    }
+}
+```
+
+## 💡 실습 과제
+
+### 기초
+1. `src/examples/01.variable.py` 실행하고 13가지 변수명 원칙 학습
+2. `src/examples/02.type_hint.py`로 타입 힌트 필요성 이해
+3. `src/refactoring/00.bad_lottery.py`와 `00.clean_lottery.py` 비교
+
+### 중급
+4. `src/refactoring/01.lottery.py`부터 `04.lottery.py`까지 단계별 리팩토링 과정 분석
+5. `lottery04`와 `lottery05`의 차이점 이해 (IO 의존성 제거)
+6. 테스트 코드 작성 연습
+
+### 고급
+7. 자신의 코드에 Ruff 적용하여 자동 개선
+8. 기존 프로젝트를 클린 코드 원칙으로 리팩토링
+9. 테스트 가능한 설계로 코드 재구성
+
+## 📚 참고 자료
+
+### 책
 - [Clean Code by Robert C. Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+- [Refactoring by Martin Fowler](https://refactoring.com/)
+
+### 공식 문서
 - [PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
 - [Python Type Hints](https://docs.python.org/3/library/typing.html)
+- [pytest Documentation](https://docs.pytest.org/)
+- [Ruff Documentation](https://docs.astral.sh/ruff/)
 
-## 라이선스
+### 관련 블로그
+- [Clean Code - 변수명 작성법](https://jyami.tistory.com/74)
+
+## 🤝 기여
+
+이슈와 PR은 언제나 환영합니다!
+
+## 📄 라이선스
 
 이 프로젝트는 교육 목적으로 만들어졌습니다.
+
+## 👨‍💻 Author
+
+**jyami-kim**
+- GitHub: [@jyami-kim](https://github.com/jyami-kim)
+- Blog: [jyami.tistory.com](https://jyami.tistory.com)
