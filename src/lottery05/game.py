@@ -46,7 +46,7 @@ def read_user_numbers(input_func=input, print_func=print) -> list[int]:
             continue
 
         if not is_valid_lotto_number(number, user_numbers):
-            print_func(f"잘못된 번호입니다. " f"{LOTTO_MIN_NUMBER}~{LOTTO_MAX_NUMBER} 범위, 중복 불가입니다.")
+            print_func(f"잘못된 번호입니다. {LOTTO_MIN_NUMBER}~{LOTTO_MAX_NUMBER} 범위, 중복 불가입니다.")
             continue
 
         user_numbers.append(number)
