@@ -16,10 +16,7 @@ RANK_BY_MATCH_COUNT = {
 
 def is_valid_lotto_number(number: int, existing_numbers: list[int]) -> bool:
     """로또 번호로 유효한지 검사한다."""
-    return (
-        LOTTO_MIN_NUMBER <= number <= LOTTO_MAX_NUMBER
-        and number not in existing_numbers
-    )
+    return LOTTO_MIN_NUMBER <= number <= LOTTO_MAX_NUMBER and number not in existing_numbers
 
 
 def generate_lotto_numbers() -> list[int]:
@@ -49,10 +46,7 @@ def read_user_numbers(input_func=input, print_func=print) -> list[int]:
             continue
 
         if not is_valid_lotto_number(number, user_numbers):
-            print_func(
-                f"잘못된 번호입니다. "
-                f"{LOTTO_MIN_NUMBER}~{LOTTO_MAX_NUMBER} 범위, 중복 불가입니다."
-            )
+            print_func(f"잘못된 번호입니다. {LOTTO_MIN_NUMBER}~{LOTTO_MAX_NUMBER} 범위, 중복 불가입니다.")
             continue
 
         user_numbers.append(number)

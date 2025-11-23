@@ -4,9 +4,7 @@ repos:
     hooks:
       # ruff lint (버그/스타일/가독성 문제) + 자동 fix
       - id: ruff
-        args: ["check", "--fix"]
+        args: ["--fix"]
 
       # ruff formatter (black-style auto formatting)
       - id: ruff-format
-
-      
