@@ -3,20 +3,25 @@ lottery05/game.py 테스트
 IO 의존성을 제거한 버전의 테스트
 """
 
-import pytest
 from unittest.mock import Mock
 
 from src.lottery05 import (
-    is_valid_lotto_number,
-    generate_lotto_numbers,
-    read_user_numbers,
-    count_match,
-    get_rank,
-    print_result,
-    LOTTO_NUMBER_COUNT,
-    LOTTO_MIN_NUMBER,
     LOTTO_MAX_NUMBER,
+    LOTTO_MIN_NUMBER,
+    LOTTO_NUMBER_COUNT,
+    count_match,
+    generate_lotto_numbers,
+    get_rank,
+    is_valid_lotto_number,
+    print_result,
+    read_user_numbers,
 )
+
+
+class Test:
+    def test_fail(self):
+        vaule = False
+        assert vaule is True
 
 
 class TestIsValidLottoNumber:
@@ -114,10 +119,7 @@ class TestReadUserNumbers:
 
         assert all(LOTTO_MIN_NUMBER <= n <= LOTTO_MAX_NUMBER for n in numbers)
         # 범위 에러 메시지가 출력되었는지 확인
-        assert any(
-            f"{LOTTO_MIN_NUMBER}~{LOTTO_MAX_NUMBER}" in str(call)
-            for call in mock_print.call_args_list
-        )
+        assert any(f"{LOTTO_MIN_NUMBER}~{LOTTO_MAX_NUMBER}" in str(call) for call in mock_print.call_args_list)
 
     def test_multiple_errors_in_sequence(self):
         """여러 종류의 에러가 섞여있어도 올바르게 처리한다"""
