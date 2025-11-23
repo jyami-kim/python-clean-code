@@ -1,0 +1,12 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9   # 최신 릴리스로 업데이트 가능
+    hooks:
+      # ruff lint (버그/스타일/가독성 문제) + 자동 fix
+      - id: ruff
+        args: ["check", "--fix"]
+
+      # ruff formatter (black-style auto formatting)
+      - id: ruff-format
+
+      
