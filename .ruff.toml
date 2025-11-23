@@ -1,0 +1,17 @@
+# 파일: .ruff.toml
+
+line-length = 120
+
+[format]
+quote-style = "double"
+
+# E: pycodestyle errors
+# W: pycodestyle warnings
+# F: pyflakes
+# I: isort (import 정렬)
+[lint]
+select = ["E", "W", "F", "I"]
+ignore = ["E501"]  # 너무 긴 줄 허용(선택)
+
+[lint.isort]
+combine-as-imports = true
