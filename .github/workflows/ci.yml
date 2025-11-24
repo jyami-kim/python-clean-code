@@ -27,10 +27,10 @@ jobs:
           uv pip install --system ruff pytest pydantic
 
       - name: Ruff lint
-        run: ruff check src/
+        run: ruff check src/lottery07
 
       - name: Ruff format
-        run: ruff format --check src/
+        run: ruff format --check src/lottery07
 
       - name: Pytest
         run: pytest
