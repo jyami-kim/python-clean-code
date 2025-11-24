@@ -24,13 +24,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv pip install --system ruff pytest
+          uv pip install --system ruff pytest pydantic
 
       - name: Ruff lint
-        run: ruff check src/lottery05
+        run: ruff check src/lottery07
 
       - name: Ruff format
-        run: ruff format --check src/lottery05
+        run: ruff format --check src/lottery07
 
       - name: Pytest
         run: pytest
